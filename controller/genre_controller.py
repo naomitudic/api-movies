@@ -51,7 +51,7 @@ def get_by_id(db: Session, genre_ids: int) -> Genre:
         if not genre:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Director with id {genre_ids} not found"
+                detail=f"Director with ID {genre_ids} not found"
             )
         return genre
     except SQLAlchemyError as error:
@@ -85,7 +85,7 @@ def delete_genre(db: Session, genre_ids: int) -> dict:
     try:
         db.delete(db_genre)
         db.commit()
-        return {"message": f"Genre with id {genre_ids} deleted successfully"}
+        return {"message": f"Genre with ID {genre_ids} deleted successfully"}
     except SQLAlchemyError as error:
         db.rollback()
         raise HTTPException(

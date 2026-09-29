@@ -25,6 +25,19 @@ def watch_directors(
 ):
     return controller.get_all(db=db, skip=skip, limit=limit)
 
+@router.get(
+        "/{director_id}",
+        response_model=DirectorResponse,
+        summary="Get director by ID",
+        description="Fetch a specific director by their ID"
+)
+
+def watch_director(
+    director_id: int = Path(..., ge=1, description="The director's ID"),
+    db: Session = Depends(get_db)
+):
+    return controller.get_by_id(db=db, director_id=director_id)
+
 @router.post(
     "/",
     response_model=DirectorResponse,

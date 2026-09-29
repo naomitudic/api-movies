@@ -41,7 +41,7 @@ def get_by_id(db: Session, director_id: int) -> Director:
         if not director:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Director with id {director_id} not found"
+                detail=f"Director with ID {director_id} not found"
             )
         return director
     except SQLAlchemyError as error:
@@ -75,7 +75,7 @@ def delete_director(db: Session, director_id: int) -> dict:
     try:
         db.delete(db_director)
         db.commit()
-        return {"message": f"Director with id {director_id} deleted successfully"}
+        return {"message": f"Director with ID {director_id} deleted successfully"}
     except SQLAlchemyError as error:
         db.rollback()
         raise HTTPException(
