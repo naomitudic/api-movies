@@ -71,7 +71,7 @@ def create_movie(db:Session, movie_data: MovieCreate) -> Movie:
 
 def get_by_id(db: Session, movie_id: int) -> Movie:
     try:
-        movie = db.query(Movie).filter(movie_id == movie_id).first()
+        movie = db.query(Movie).filter(Movie.id == movie_id).first()
         if not movie:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
