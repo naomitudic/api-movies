@@ -44,3 +44,51 @@ def create_genre(db:Session, genre_data: GenreCreate) -> Genre:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Database error in playing the movie {str(error)}"
         )
+
+def get_by_id(db: Session, genre_ids: int) -> Genre:
+    try:
+        genre = db.query(Genre).filter(Genre.id == genre_ids).first()
+        if not genre:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Director with id {genre_ids} not found"
+            )
+        return genre
+    except SQLAlchemyError as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Database error fetching genre: {str(error)}"
+        )
+
+def update_genre(db: Session, genre_ids: int, genre_data: GenreUpdate) -> Genre:
+    db_genre = get_by_id(db, genre_ids)
+
+    update_data = genre_data.model_dump(exclude_unset=True)
+
+    for field, value in update_data.items():
+        setattr(db_genre, field, value)
+
+    try:
+        db.commit()
+        db.refresh(db_genre)
+        return db_genre
+    except SQLAlchemyError as error:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Database error updating genre: {str (error)}"
+        )
+
+def delete_genre(db: Session, genre_ids: int) -> dict:
+    db_genre = get_by_id(db, genre_ids)
+
+    try:
+        db.delete(db_genre)
+        db.commit()
+        return {"message": f"Genre with id {genre_ids} deleted successfully"}
+    except SQLAlchemyError as error:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Database error deleting genre: {str(error)}"
+        )

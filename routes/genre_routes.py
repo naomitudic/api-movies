@@ -38,3 +38,30 @@ def create_new_genre(
     db:Session=Depends(get_db)
 ):
     return controller.create_genre(db=db, genre_data=genre_data)
+
+@router.put(
+    "/{genre_ids}",
+    response_model=GenreResponse,
+    summary="Update a genre",
+    description="Update information of an existing genre"
+)
+
+def update_existing_genre(
+    genre_data: GenreUpdate,
+    genre_ids: int = Path(..., ge=1, description="The genre's ID to update"),
+    db: Session = Depends(get_db)
+):
+    return controller.update_genre(db=db, genre_ids=genre_ids, genre_data=genre_data)
+
+@router.delete(
+    "/{genre_ids}",
+    status_code=status.HTTP_200_OK,
+    summary="Delete a genre",
+    description="Delete an existing genre by ID"
+)
+
+def delete_existing_genre(
+    genre_ids: int = Path(..., ge=1, description="The genre's ID to delete"),
+    db: Session = Depends(get_db)
+):
+    return controller.delete_genre(db=db, genrer_ids=genre_ids)
