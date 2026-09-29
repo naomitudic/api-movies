@@ -16,7 +16,7 @@ router = APIRouter(
     "/",
     response_model=List[MovieResponse],
     summary="All movies",
-    description="Seen all movies"
+    description="See all movies"
 )
 def watch_movies(
     skip:int = Query(0, ge=0, description="Number record"),
@@ -59,7 +59,7 @@ def create_new_movie(
 )
 def update_existing_movie(
     movie_data: MovieUpdate,
-    movie_id: int = Path(..., ge=1, description="The ID of the movie to update"),
+    movie_id: int = Path(..., ge=1, description="The movie's ID to update"),
     db: Session = Depends(get_db)
 ):
     return controller.update_movie(db=db, movie_id=movie_id, movie_data=movie_data)
@@ -71,7 +71,7 @@ def update_existing_movie(
     description="Delete a movie by its ID"
 )
 def delete_existing_movie(
-    movie_id: int = Path(..., ge=1, description="The ID of the movie to delete"),
+    movie_id: int = Path(..., ge=1, description="The movie's ID to delete"),
     db: Session = Depends(get_db)
 ):
     return controller.delete_movie(db=db, movie_id=movie_id)
