@@ -28,10 +28,10 @@ app = FastAPI(
 # Configuración de CORS (permite que el frontend independiente haga peticiones)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://127.0.0.1:5500/index.html"], # En producción, reemplaza "*" por la URL de tu frontend (ej: "http://localhost:5173")
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["http://127.0.0.1:5500/index.html"],
+    allow_headers=["http://127.0.0.1:5500/index.html"],
 )
 
 # Registrar el router de películas
