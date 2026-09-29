@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from model.movie_model import Movie
 from model.director_model import Director
 from model.genre_model import Genre
-from schema.movie_schema import MovieCreate
+from schema.movie_schema import MovieCreate, MovieUpdate
 
 
 def get_all(db:Session, skip:int=0, limit:int=100)-> List[Movie]:

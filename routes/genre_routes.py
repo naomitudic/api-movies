@@ -1,9 +1,9 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, Path, Query, status
 from sqlalchemy.orm import Session
 
 from database.database import get_db
-from schema.genre_schema import GenreCreate, GenreResponse, GenreDetailResponse
+from schema.genre_schema import GenreCreate, GenreResponse, GenreDetailResponse, GenreUpdate
 import controller.genre_controller as controller
 
 router = APIRouter(

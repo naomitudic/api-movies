@@ -4,14 +4,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session, joinedload
 
 from model.genre_model import Genre
-from schema.genre_schema import GenreCreate
+from schema.genre_schema import GenreCreate, GenreUpdate
 
 
 def get_all(db:Session, skip:int=0, limit:int=100)-> List[Genre]:
     try:
         return(
             db.query(Genre)
-            .option(joinedload(Genre.movies))
+            .options(joinedload(Genre.movies))
             .offset(skip)
             .limit(limit)
             .all()
