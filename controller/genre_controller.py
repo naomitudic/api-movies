@@ -19,7 +19,7 @@ def get_all(db:Session, skip:int=0, limit:int=100)-> List[Genre]:
     except SQLAlchemyError as error:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Database error in playing the director {str(error)}"
+            detail=f"Database error fetching genres {str(error)}"
         )
 
 def create_genre(db:Session, genre_data: GenreCreate) -> Genre:
@@ -42,16 +42,16 @@ def create_genre(db:Session, genre_data: GenreCreate) -> Genre:
         db.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Database error in playing the movie {str(error)}"
+            detail=f"Database error creating genre {str(error)}"
         )
 
-def get_by_id(db: Session, genre_ids: int) -> Genre:
+def get_by_id(db: Session, genre_id: int) -> Genre:
     try:
-        genre = db.query(Genre).filter(Genre.id == genre_ids).first()
+        genre = db.query(Genre).filter(Genre.id == genre_id).first()
         if not genre:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Director with ID {genre_ids} not found"
+                detail=f"Genre with ID {genre_id} not found"
             )
         return genre
     except SQLAlchemyError as error:
@@ -60,8 +60,8 @@ def get_by_id(db: Session, genre_ids: int) -> Genre:
             detail=f"Database error fetching genre: {str(error)}"
         )
 
-def update_genre(db: Session, genre_ids: int, genre_data: GenreUpdate) -> Genre:
-    db_genre = get_by_id(db, genre_ids)
+def update_genre(db: Session, genre_id: int, genre_data: GenreUpdate) -> Genre:
+    db_genre = get_by_id(db, genre_id)
 
     update_data = genre_data.model_dump(exclude_unset=True)
 
@@ -79,13 +79,13 @@ def update_genre(db: Session, genre_ids: int, genre_data: GenreUpdate) -> Genre:
             detail=f"Database error updating genre: {str (error)}"
         )
 
-def delete_genre(db: Session, genre_ids: int) -> dict:
-    db_genre = get_by_id(db, genre_ids)
+def delete_genre(db: Session, genre_id: int) -> dict:
+    db_genre = get_by_id(db, genre_id)
 
     try:
         db.delete(db_genre)
         db.commit()
-        return {"message": f"Genre with ID {genre_ids} deleted successfully"}
+        return {"message": f"Genre with ID {genre_id} deleted successfully"}
     except SQLAlchemyError as error:
         db.rollback()
         raise HTTPException(

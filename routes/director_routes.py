@@ -17,7 +17,6 @@ router = APIRouter(
     summary="All directors",
     description="Seen all directors"
 )
-
 def watch_directors(
     skip:int = Query(0, ge=0, description="Number record"),
     limit:int = Query(100, ge=1, le=100, description="Number record"),
@@ -31,7 +30,6 @@ def watch_directors(
         summary="Get director by ID",
         description="Fetch a specific director by their ID"
 )
-
 def watch_director(
     director_id: int = Path(..., ge=1, description="The director's ID"),
     db: Session = Depends(get_db)
@@ -45,7 +43,6 @@ def watch_director(
     summary="Upload a new director",
     description="Upload a new director"
 )
-
 def create_new_director(
     director_data: DirectorCreate,
     db:Session=Depends(get_db)
@@ -58,7 +55,6 @@ def create_new_director(
     summary="Update a director",
     description="Update information of an existing director"
 )
-
 def update_existing_director(
     director_data: DirectorUpdate,
     director_id: int = Path(..., ge=1, description="The director's ID to update"),
@@ -72,7 +68,6 @@ def update_existing_director(
     summary="Delete a director",
     description="Delete an existing director by ID"
 )
-
 def delete_existing_director(
     director_id: int = Path(..., ge=1, description="The director's ID to delete"),
     db: Session = Depends(get_db)
