@@ -5,8 +5,6 @@ body{
     align-items: center;
 }
 
-
-
 .page-title {
     margin-bottom: 1.5rem;
 }
@@ -38,7 +36,7 @@ input[type="text"],
 input[type="number"],
 select {
     padding: 0.5rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid lightgray;
     border-radius: 0.375rem;
     font: inherit;
 }
@@ -75,8 +73,8 @@ section {
 }
 
 #movieList {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 50% 50%;
     gap: 1rem;
 }
 
@@ -92,7 +90,7 @@ section {
 }
 
 .movie-card p {
-    color: #4b5563;
+    color: grey;
     font-size: 0.875rem;
 }
 
@@ -107,14 +105,14 @@ section {
 
 .genres li {
     background: #e0e7ff;
-    color: #3730a3;
+    color: blue;
     border-radius: 9999px;
     padding: 0.125rem 0.625rem;
     font-size: 0.75rem;
 }
 
 .delete {
-    background: #dc2626;
+    background: rgb(227, 3, 3);
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
 }
