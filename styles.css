@@ -68,9 +68,19 @@ button:disabled {
     cursor: not-allowed;
 }
 
-section {
+.movies {
     margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
+
+h2{
+    font-size: large;
+    font-weight: 700;
+
+}
+
 
 #movieList {
     display: grid;
